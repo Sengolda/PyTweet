@@ -39,7 +39,7 @@ print(tweet.text, tweet.id, tweet.author.username)
 ```
 
 # Contribute
-You can Contribute or open an issue regarding this wrapper in [github](https://github.com/TheFarGG/PyTweet)! 
+You can Contribute or open an issue regarding this wrapper [here](https://github.com/TheFarGG/PyTweet)! 
 
 # Licence
 [MIT](https://opensource.org/licenses/MIT)
