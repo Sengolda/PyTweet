@@ -18,15 +18,19 @@ class User:
     """Represent a user in Twitter.
     User is an identity in twitter, its very interactive. Can send message, post a tweet, and even send messages to other user through Dms.
 
+
     .. describe:: x == y
+
         Check if one user id is equal to another.
 
 
     .. describe:: x != y
+
         Check if one user id is not equal to another.
 
 
     .. describe:: str(x)
+
         Get the user's name.
 
 
@@ -268,7 +272,11 @@ class User:
             f"/users/{self.id}/following",
             params={"user.fields": USER_FIELD},
         )
-        return [User(data, http_client=self.http_client) for data in following["data"]]
+
+        try:
+            return [User(data, http_client=self.http_client) for data in following["data"]]
+        except TypeError:
+            return following
 
     def fetch_pinned_tweet(self) -> Optional[Any]:
         """Returns the user's pinned tweet.
@@ -359,7 +367,10 @@ class User:
         try:
             return [Tweet(data) for data in res["data"]]
         except TypeError:
-            return res
+            return []
+
+        except KeyError:
+            return []
 
     @property
     def name(self) -> str:
@@ -391,7 +402,7 @@ class User:
 
         .. versionadded: 1.0.0
         """
-        return self._payload.get("description")
+        return self._payload.get("description", "")
 
     @property
     def description(self) -> str:
@@ -415,7 +426,7 @@ class User:
 
         .. versionadded: 1.0.0
         """
-        return self._payload.get("url")
+        return self._payload.get("url", "")
 
     @property
     def verified(self) -> bool:
@@ -434,12 +445,12 @@ class User:
         return self._payload.get("protected")
 
     @property
-    def avatar_url(self) -> Optional[str]:
+    def profile_url(self) -> Optional[str]:
         """Optional[:class:`str`]: Return the user profile image.
 
         .. versionadded: 1.0.0
         """
-        return self._payload.get("profile_image_url")
+        return self._payload.get("profile_image_url", "")
 
     @property
     def location(self) -> Optional[str]:
@@ -447,7 +458,7 @@ class User:
 
         .. versionadded: 1.0.0
         """
-        return self._payload.get("location")
+        return self._payload.get("location", "")
 
     @property
     def created_at(self) -> datetime.datetime:

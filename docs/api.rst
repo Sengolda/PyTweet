@@ -108,6 +108,15 @@ Attachments
 
 These following object are not meant to be create as an instance rather its for knowledge of what you can do with them.
 
+CustomProfile
+~~~~~~~
+
+.. attributetable:: CustomProfile
+
+.. autoclass:: CustomProfile
+    :members:
+
+
 Media
 ~~~~~~~
 
@@ -286,56 +295,43 @@ EmbedsImages
     :members:
 
 
-Events Reference
+Event Reference
 ---------------------
-IDK LMFAO
+This section shows events listened to by :class:`Client`
 
-.. data:: on_stream_connect
+You can register an event using :meth:`Client.event`
+
+Example:
+
+.. code-block:: python
+
+  @client.event
+  def on_stream_connect(connection):
+   print(connection)
+
+
+.. function:: on_stream_connect(connection)
 
     `on_stream_connect` is an event trigger when the client succesfuly connect to stream, this might trigger multiple times as a reconnect logic would trigger this event too.
 
-    .. code-block:: python
+    :param connection: The Stream connection.
+    :type connection: :class:`StreamConnection`
 
-        @client.event
-        def on_stream_connect(connection):
-            . . . #do what you want with stream connection.
-
-    Parameters
-    ------------
-    connection: :class:`StreamConnection`
-        The stream's connection represent with :class:`StreamConnection`.
-
-.. data:: on_stream_disconnect
+.. function:: on_stream_disconnect(connection)
 
     `on_stream_disconnect` is an event trigger when the client disconnect from stream.
 
-    .. code-block:: python
+    :param connection: The Stream connection.
+    :type connection: :class:`StreamConnection` 
 
-        @client.event
-        def on_stream_disconnect(connection):
-            ... #do what you want with stream connection.
-
-    Parameters
-    ------------
-    connection: :class:`StreamConnection`
-        The :class:`StreamConnection` of the stream. 
-
-.. data:: on_stream
+.. function:: on_stream(tweet, connection)
 
     `on_stream` is an event trigger when a stream return a tweet data.
 
-    .. code-block:: python
-
-        @client.event
-        def on_stream(tweet, connection):
-            . . . #do what you want with the tweet and stream connection.
-
-    Parameters
-    ------------
-    tweet: :class:`Tweet`
-        The data that's going to be returns from the stream.
-    connection: :class:`StreamConnection`
-        The :class:`StreamConnection` of the stream.
+    :param tweet: The data that’s going to be returns from the stream.
+    :param connection: The stream connection
+    :type tweet: :class:`Tweet`
+    :type connection: :class:`StreamConnection`
 
 Enums 
 --------------
@@ -345,42 +341,66 @@ All these enums are a subclass of :class:`enum.Enum`
 .. class:: SpaceState
 
     .. attribute:: live
+
         indicates the space is live
     
 
     .. attribute:: scheduled
+
         indicates the space is scheduled
     
 
 .. class:: ReplySetting
 
     .. attribute:: everyone
+
         Everyone can reply.
     
 
     .. attribute:: mention_users
+
         Only users who are mentioned in the tweet can reply.
     
 
     .. attribute:: following
+
         Only people who are following the author of the tweet can reply.
 
 .. class:: MessageTypeEnum
 
     .. attribute:: DIRECT_MESSAGE
+
         A direct message in twitter.
     
 
     .. attribute:: MESSAGE_TWEET
+
         A public tweet.
     
 
     .. attribute:: MESSAGE_WELCOME_MESSAGE
+
         A welcome message in a direct message.
     
 
     .. attribute:: MESSAGE_WELCOME_MESSAGE_RULE
+
         A welcome message rule in a direct message.
+
+
+Oauth
+-------------
+
+Oauth is a way to authenticate a twitter user account. You can do this with the 3 legged authentication via :meth:`OauthSession.with_oauth_flow`. This also required in every request you've made for identification!
+
+OauthSession
+~~~~~~~
+
+.. attributetable:: OauthSession
+
+
+.. autoclass:: OauthSession
+    :members:
 
 
 Errors
