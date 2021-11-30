@@ -117,6 +117,9 @@ html_experimental_html5_writer = True
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
 
+# If true, the index is generated twice: once as a single page with all the entries, and once as one page per starting letter. Default is False.
+html_split_index = True
+
 html_search_scorer = "_static/scorer.js"
 
 html_js_files = ["copy.js", "settings.js", "sidebar.js", "custom.js"]
