@@ -12,7 +12,7 @@ mapping = {
 }
 
 # Create the authorize object, inherits nodes.Admonition to look like info or warn directive.
-class authorize(nodes.Admonition, nodes.Element):
+class Authorize(nodes.Admonition, nodes.Element):
     pass
 
 
@@ -40,7 +40,7 @@ class AuthorizeDirective(SphinxDirective):
             text = mapping.get(code)
             raw_text += f"{text}\n"
         self.arguments[1] = "EEEE"
-        authorize_node = authorize("\n".join(self.arguments))
+        authorize_node = Authorize("\n".join(self.arguments))
         authorize_node += nodes.title(_("Authorization Required"), _("Authorization Required"))
         self.state.nested_parse(self.content, self.content_offset, authorize_node)
 
@@ -62,14 +62,7 @@ def merge_todos(app, env, docnames, other):
 
 
 def setup(app):
-    app.add_config_value("todo_include_todos", True, "html")
-    app.add_node(
-        authorize,
-        html=(visit_authorize_node, depart_authorize_node),
-        latex=(visit_authorize_node, depart_authorize_node),
-        text=(visit_authorize_node, depart_authorize_node),
-    )
-
+    app.add_node(authorize, html=(visit_authorize_node, depart_authorize_node))
     app.add_directive("authorize", AuthorizeDirective)
     app.connect("env-purge-doc", purge_todos)
     app.connect("env-merge-info", merge_todos)
